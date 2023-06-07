@@ -34,4 +34,4 @@ jobs:
         run: zip -r lambda.zip *
 
       - name: Upload to S3
-        run: aws s3 cp ${{ github.run_id }}.zip s3://deltaprime-test-lambda-bucket/${{ github.run_id }}.zip
+        run: aws s3 cp lambda.zip s3://deltaprime-test-lambda-bucket/lambda.zip
