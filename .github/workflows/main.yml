@@ -31,7 +31,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           
       - name: ZIP build
-        run: zip ${{ github.run_id }}.zip bootstrap
+        run: zip -r lambda.zip *
 
       - name: Upload to S3
         run: aws s3 cp ${{ github.run_id }}.zip s3://deltaprime-test-lambda-bucket/${{ github.run_id }}.zip
