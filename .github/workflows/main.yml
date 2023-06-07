@@ -35,3 +35,6 @@ jobs:
 
       - name: Upload to S3
         run: aws s3 cp lambda.zip s3://deltaprime-test-lambda-bucket/lambda.zip
+        
+      - name: Update lambda function code
+        run: aws lambda update-function-code --function-name deltaprime-test-lambda --s3-bucket deltaprime-test-lambda-bucket --s3-key lambda.zip
