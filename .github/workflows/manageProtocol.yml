@@ -11,6 +11,7 @@ on:
 env:
   
   AWS_REGION : eu-central-1 #Change to reflect your Region
+  LAMBDA_NAME: manageProtocol
 
 # Permission can be added at job level or workflow level    
 permissions:
@@ -31,10 +32,10 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           
       - name: ZIP build
-        run: zip -r lambda.zip manageProtocol
+        run: zip -r lambda.zip ${{ env.LAMBDA_NAME }}
 
       - name: Upload to S3
-        run: aws s3 cp lambda.zip s3://deltaprime-test-lambda-bucket/manageProtocol/lambda.zip
+        run: aws s3 cp lambda.zip s3://deltaprime-test-lambda-bucket/${{ env.LAMBDA_NAME }}/lambda.zip
         
       - name: Update lambda function code
-        run: aws lambda update-function-code --function-name manageProtocol --s3-bucket deltaprime-test-lambda-bucket --s3-key manageProtocol/lambda.zip
+        run: aws lambda update-function-code --function-name ${{ env.LAMBDA_NAME }} --s3-bucket deltaprime-test-lambda-bucket --s3-key ${{ env.LAMBDA_NAME }}/lambda.zip
