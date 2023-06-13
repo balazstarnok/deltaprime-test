@@ -31,8 +31,16 @@ jobs:
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
           
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install --prefix ./${{ env.LAMBDA_NAME }}
+          
       - name: ZIP build
-        run: zip -r lambda.zip ${{ env.LAMBDA_NAME }}
+        run: zip -r lambda.zip ./${{ env.LAMBDA_NAME }}/*
 
       - name: Upload to S3
         run: aws s3 cp lambda.zip s3://deltaprime-test-lambda-bucket/${{ env.LAMBDA_NAME }}/lambda.zip
